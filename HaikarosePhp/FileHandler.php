@@ -55,8 +55,11 @@
 
      //this function is for making sure the files name are unique
      public static function uniqueName(){
-       $name=null;
-       return $name;
+         if(file_exists("check.php")){
+             uniqueName();
+         }
+         $name=null;
+         return $name;
      }
 
   }

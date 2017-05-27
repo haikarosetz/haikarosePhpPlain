@@ -11,6 +11,21 @@
   BcryptPasswordEncoder::encrypt("HaikarosePhp"));
 
 
+  $name=SuperGlobal::get("name");
+  $age=SuperGlobal::get("age");
+  $program=SuperGlobal::get("program");
+
+  $results=SuperGlobal::notNull($name,$age,$program);
+
+  if($results){
+      echo "<br/> Every item is not null <br/>";
+      echo "hello ".$name." ".$age;
+  }else{
+      echo "<br/>some items are null<br/>";
+  }
+
+
+
   //test for database , not done..
 
   //test for File handler, not done.

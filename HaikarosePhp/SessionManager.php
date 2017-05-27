@@ -14,6 +14,10 @@ class SessionManager{
       $_SESSION[$key]=$value;
   }
 
+  public static function removeFromSession($key){
+    unset($_SESSION[$key]);
+  }
+
   public static function get($name){
     if(session_status()==PHP_SESSION_ACTIVE && isset($_SESSION[$name])){
          return $_SESSION[$name];
@@ -21,6 +25,7 @@ class SessionManager{
          return null;
     }
   }
+  
 }
 
 

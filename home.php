@@ -5,4 +5,8 @@
     SessionManager::prepare();
     SessionManager::quit(); //clear all the session variables.
 
+    //echo uniqid(123,true).".pdf";
+
+  
+
  ?>

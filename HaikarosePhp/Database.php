@@ -9,15 +9,14 @@
           $database=DATABASE_NAME){
               $this->connection=new mysqli($host,$username,$password,$database);
         }
-        public function cleaned_data($value){
+        public function clean($value){
           $value=mysqli_real_escape_string($this->connection,$value);
           return $value;
         }
 
         //return the last inserted id
         public function insertedId(){
-          $id=null;
-          return $id;
+          return $connection->insert_id;
         }
 
         //return last error if any
@@ -27,7 +26,7 @@
 
         //return row affected info if any//
         public function rowAffected(){
-            return null;
+            return $connection->affected_rows;
         }
     }
 
