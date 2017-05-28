@@ -3,15 +3,13 @@
 
     class Database{
         public $connection;
-        public $resultSet;
-
+      
         public function __construct($host=HOST,$password=PASSWORD,$username=USERNAME,
           $database=DATABASE_NAME){
               $this->connection=new mysqli($host,$username,$password,$database);
         }
         public function clean($value){
-          $value=mysqli_real_escape_string($this->connection,$value);
-          return $value;
+          return mysqli_real_escape_string($this->connection,$value);
         }
 
         //return the last inserted id

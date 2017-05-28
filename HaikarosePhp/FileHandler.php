@@ -6,23 +6,15 @@
 
     ////this function upload only a single file from the request///
     public static function uploadSingleFile($path,$resource){
+        $fileName=$path.((string)(round(microtime(true) * 1000)))
+        .str_replace('.','-',uniqid('78442',true))."."
+        .pathinfo(basename($_FILES[$resource]["name"]), PATHINFO_EXTENSION);
 
-      $file=$resource;
-      $directoryPath=$path;
-      $resource=null;
+        if (move_uploaded_file($_FILES[$resource]["tmp_name"],$fileName)) {
+            return $fileName;
+        }
+        return null;
 
-      $directoryPath.=$resources['name']['tmp'];
-      echo "directoryPath ".$directoryPath." the end";
-      echo "before this after the end";
-
-      if(move_uploaded_file($resources['tmp_name'][$i],$directoryPath)){
-          //insert the url to the database.
-          $ext = pathinfo($resources['name'][$i], PATHINFO_EXTENSION);
-          $resource=pathinfo($resources['name'][$i],PATHINFO_EXTENSION);
-      }else{
-          return null;
-      }
-      return $resourcesList;
     }
 
     ////this function upload multiple files while returning the url//
@@ -53,13 +45,11 @@
 
      }
 
-     //this function is for making sure the files name are unique
-     public static function uniqueName(){
-         if(file_exists("check.php")){
-             uniqueName();
-         }
-         $name=null;
-         return $name;
+     public static function deleteFile($filePath){
+       if(unlink($filePath)){
+          return true;
+       }
+       return false;
      }
 
   }
