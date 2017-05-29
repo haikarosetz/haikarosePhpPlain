@@ -10,6 +10,9 @@
         .str_replace('.','-',uniqid('78442',true))."."
         .pathinfo(basename($_FILES[$resource]["name"]), PATHINFO_EXTENSION);
 
+        if($_FILES[$resource]["error"]){
+          return null;
+        }
         if (move_uploaded_file($_FILES[$resource]["tmp_name"],$fileName)) {
             return $fileName;
         }
@@ -18,28 +21,28 @@
     }
 
     ////this function upload multiple files while returning the url//
-     public static function doTheUPloadMultiple($path,$resources){
+     public static function doTheUPloadMultiple($path,$names){
 
+        $resources=$_FILES[$names];
         $resourcesList=array();
         $fileCount=count($resources['name']);
-        $files=$resources;
-        print_r($resources);
-        $directoryPath=$path;
 
         if($fileCount>0){
-              $resource=null;
               for($i=0;$i<$fileCount;$i++){
-                    $directoryPath.=$resources['name'][$i];
-                        if(move_uploaded_file($resources['tmp_name'][$i],$directoryPath)){
-                              $ext = pathinfo($resources['name'][$i], PATHINFO_EXTENSION);
-                              $resource=pathinfo($resources['name'][$i],
-                              PATHINFO_EXTENSION);
-                         }else{
-                              return null;
-                         }
-                              $resourcesList[]=$resource;
-              }
+                    $name=$path.((string)(round(microtime(true) * 1000)))
+                    .str_replace('.','-',uniqid('78442',true))."."
+                    .pathinfo(basename($resources['name'][$i]), PATHINFO_EXTENSION);
 
+                    if(!(move_uploaded_file($resources['tmp_name'][$i],$name))){
+                              foreach ($resourcesList as $resource) {
+                                  self::deleteFile($filePath);
+                              }
+                              return false;
+                     }
+                    $resourcesList[]=$name;
+              }
+        }else{
+          return null;
         }
         return $resourcesList;
 
